@@ -3,33 +3,33 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  // State variables
+  
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch all countries on initial render with async/await and try-catch
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        setLoading(true); // Set loading to true while fetching data
+        setLoading(true);
         const response = await axios.get("https://restcountries.com/v3.1/all");
         setCountries(response.data);
-        setFilteredCountries(response.data); // Show all countries initially
-        setLoading(false); // Set loading to false once data is fetched
+        setFilteredCountries(response.data);
+        setLoading(false); 
       } catch (err) {
         setError("Error fetching countries.");
         console.error("Error fetching data:", err);
-        setLoading(false); // Set loading to false even if there is an error
+        setLoading(false); 
       }
     };
 
-    fetchCountries(); // Call the async function to fetch data
+    fetchCountries(); 
   }, []);
 
-  // Filter countries based on search term
+  
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchTerm(query);
@@ -41,7 +41,7 @@ function App() {
         )
       );
     } else {
-      setFilteredCountries(countries); // If no search term, show all countries
+      setFilteredCountries(countries); 
     }
   };
 
@@ -49,7 +49,7 @@ function App() {
     <div className="app">
       <h1>Country Search</h1>
 
-      {/* Search Bar */}
+    
       <div className="search-bar">
         <input
           type="text"
@@ -59,13 +59,13 @@ function App() {
         />
       </div>
 
-      {/* Error Handling */}
+     
       {error && <p className="error-message">{error}</p>}
 
-      {/* Display loading state */}
+
       {loading && <p className="loading-message">Loading countries...</p>}
 
-      {/* Country Cards */}
+  
       <div className="country-cards">
         {filteredCountries.map((country) => (
           <div key={country.cca3} className="countryCard">
