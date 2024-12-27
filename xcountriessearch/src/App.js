@@ -10,20 +10,23 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch all countries on initial render
+  // Fetch all countries on initial render with async/await and try-catch
   useEffect(() => {
-    axios
-      .get("https://restcountries.com/v3.1/all")
-      .then((response) => {
+    const fetchCountries = async () => {
+      try {
+        setLoading(true); // Set loading to true while fetching data
+        const response = await axios.get("https://restcountries.com/v3.1/all");
         setCountries(response.data);
         setFilteredCountries(response.data); // Show all countries initially
-        setLoading(false);
-      })
-      .catch((err) => {
+        setLoading(false); // Set loading to false once data is fetched
+      } catch (err) {
         setError("Error fetching countries.");
         console.error("Error fetching data:", err);
-        setLoading(false);
-      });
+        setLoading(false); // Set loading to false even if there is an error
+      }
+    };
+
+    fetchCountries(); // Call the async function to fetch data
   }, []);
 
   // Filter countries based on search term
